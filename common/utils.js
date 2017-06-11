@@ -45,8 +45,9 @@ utils.getTicket = function (config){
      let ts = parseInt(new Date().getTime() / 1000) + '';
      let url = req.query.url;
      let str = 'jsapi_ticket=' + that.getFileTicket() + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
-     signature = sha1(str);
-
+     //signature = sha1(str);
+     shaObj = new jsSHA(str, 'TEXT');
+     signature = shaObj.getHash('SHA-1', 'HEX');
      res.json(
      	{
                   appId: config.wechat.appID,
