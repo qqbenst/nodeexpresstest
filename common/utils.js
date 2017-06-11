@@ -45,8 +45,6 @@ utils.getTicket = function (config){
      let ts = parseInt(new Date().getTime() / 1000) + '';
      let url = req.url;
      let str = 'jsapi_ticket=' + that.getFileTicket() + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
-     console.info(str);
-     shaObj = new jsSHA(str, 'TEXT');
      signature = sha1(str);
 
      res.json(
