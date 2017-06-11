@@ -38,6 +38,44 @@ utils.sign = function (config){
 		}
 	}
 };
+utils.getTicket(req, res) = function (config){
+	var that = this;
+     return function(req, res, next){
+     let noncestr = Math.random().toString(36).substr(2, 15);
+     let ts = parseInt(new Date().getTime() / 1000) + '';
+     let url = req.url;
+     let str = 'jsapi_ticket=' + that.getFileTicket() + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
+     console.info(str);
+     shaObj = new jsSHA(str, 'TEXT');
+     signature = shaObj.getHash('SHA-1', 'HEX');
+
+     res.json(
+     	{
+                  appId: config.wechat.appID,
+                  timestamp: ts,
+                  nonceStr: noncestr,
+                  signature: signature,
+                  jsApiList: [
+                      'checkJsApi',
+                      'onMenuShareTimeline',
+                      'onMenuShareAppMessage',
+                      'onMenuShareQQ',
+                      'onMenuShareWeibo',
+                      'hideMenuItems',
+                      'chooseImage'
+                  ]
+              }
+         );
+    };
+};
+
+utils.saveTicket = function (config,access_token,url){
+let wxGetTicketBaseUrl = config.wechat.prefix + ticket/getticket?+'access_token='+access_token+'&type=jsapi', function(_res){
+         // 这个异步回调里可以获取ticket
+         fs.writeFile('./ticket', _res, function (err) {
+      
+   		 });
+};
 
 utils.accessToken = function(config){
 let queryParams = {
@@ -65,10 +103,11 @@ let queryParams = {
 };
 
 utils.saveToken = function (config) {
+	var that = this;
   this.accessToken(config).then(res => {
     let token = res['access_token'];
     fs.writeFile('./token', token, function (err) {
-      
+      that.saveTicket(config,token);
     });
   })
 };
@@ -83,6 +122,10 @@ utils.refreshToken = function (config) {
 
 utils.getFileToken = function(){
 	return fs.readFileSync('./token').toString();
+};
+
+utils.getFileTicket= function(){
+	return fs.readFileSync('./ticket').toString();
 };
 
 module.exports = utils;
