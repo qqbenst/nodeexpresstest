@@ -38,7 +38,7 @@ utils.sign = function (config){
 		}
 	}
 };
-utils.getTicket(req, res) = function (config){
+utils.getTicket = function (config){
 	var that = this;
      return function(req, res, next){
      let noncestr = Math.random().toString(36).substr(2, 15);
