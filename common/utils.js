@@ -3,6 +3,7 @@ var sha1 = require('sha1');
 var request = require('request');
 var qs = require('querystring');
 var fs = require('fs');
+var jsSHA = require('jssha');
 
 //检查微信签名认证中间件
 utils.sign = function (config){
