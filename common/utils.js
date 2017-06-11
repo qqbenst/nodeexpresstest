@@ -51,12 +51,14 @@ let queryParams = {
     method: 'GET',
     url: wxGetAccessTokenBaseUrl
   };
+   console.info(res);
   return new Promise((resolve, reject) => {
     request(options, function (err, res, body) {
       if (res) {
         resolve(JSON.parse(body));
       } else {
         reject(err);
+        console.info(res);
       }
     });
   })
