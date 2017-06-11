@@ -6,10 +6,11 @@ var fs = require('fs');
 
 //检查微信签名认证中间件
 utils.sign = function (config){
+	var that = this;
 	return function(req, res, next){
 		config = config || {};
 		var q = req.query;
-	  var token = this.getFileToken().token;
+	  var token = that.getFileToken().token;
 	  var signature = q.signature; //微信加密签名
 		var nonce = q.nonce; //随机数
 		var timestamp = q.timestamp; //时间戳
