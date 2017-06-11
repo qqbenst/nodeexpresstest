@@ -68,7 +68,7 @@ utils.saveToken = function (config) {
 };
 
 utils.refreshToken = function (config) {
-  saveToken(config);
+  this.saveToken(config);
   setInterval(function () {
     saveToken(config);
   }, 7000*1000);
