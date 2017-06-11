@@ -79,7 +79,7 @@ let wxGetTicketBaseUrl = config.wechat.prefix + 'ticket/getticket?'+'access_toke
     return new Promise((resolve, reject) => {
     request(options, function (err, res, body) {
       if (res) {
-        resolve(body);
+        resolve(JSON.parse(body));
       } else {
         reject(err);
         console.info(res);
@@ -121,7 +121,7 @@ utils.saveToken = function (config) {
     var token = res['access_token'];
     fs.writeFile('./token', token, function (err) {
       that.saveTicket(config,token).then(_res =>{
-      	         fs.writeFile('./ticket', _res, function (err) {
+      	         fs.writeFile('./ticket', _res['ticket'], function (err) {
 
                  });
            });
