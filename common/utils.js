@@ -6,7 +6,7 @@ utils.sign = function (config){
 	return function(req, res, next){
 		config = config || {};
 		var q = req.query;
-	  var token = config.wechat.token;
+	  var token = getFileToken().token;
 	  var signature = q.signature; //微信加密签名
 		var nonce = q.nonce; //随机数
 		var timestamp = q.timestamp; //时间戳
@@ -33,6 +33,49 @@ utils.sign = function (config){
 			next();
 		}
 	}
+};
+
+utils.accessToken = function(config){
+let queryParams = {
+    'grant_type': 'client_credential',
+    'appid': config.appId,
+    'secret': config.appSecret
+  };
+
+  let wxGetAccessTokenBaseUrl = prefix + 'token?'+qs.stringify(queryParams);
+  let options = {
+    method: 'GET',
+    url: wxGetAccessTokenBaseUrl
+  };
+  return new Promise((resolve, reject) => {
+    request(options, function (err, res, body) {
+      if (res) {
+        resolve(JSON.parse(body));
+      } else {
+        reject(err);
+      }
+    });
+  })
+};
+
+utils.saveToken = function (config) {
+  getAccessToken(config).then(res => {
+    let token = res['access_token'];
+    fs.writeFile('./token', token, function (err) {
+      
+    });
+  })
+};
+
+utils.refreshToken = function (config) {
+  saveToken(config);
+  setInterval(function () {
+    saveToken(config);
+  }, 7000*1000);
+};
+
+utils.getFileToken = function(){
+	return fs.readFileSync('./token').toString();
 };
 
 module.exports = utils;
