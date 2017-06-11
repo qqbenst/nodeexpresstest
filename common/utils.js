@@ -69,11 +69,11 @@ utils.getTicket(req, res) = function (config){
     };
 };
 
-utils.saveTicket = function (config,access_token,url){
+utils.saveTicket = function (config,access_token){
 let wxGetTicketBaseUrl = config.wechat.prefix + ticket/getticket?+'access_token='+access_token+'&type=jsapi'; 
  let options = {
     method: 'GET',
-    url: wxGetAccessTokenBaseUrl
+    url: wxGetTicketBaseUrl
   }; 
 
     return new Promise((resolve, reject) => {
