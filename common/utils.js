@@ -42,7 +42,7 @@ let queryParams = {
     'secret': config.appSecret
   };
 
-  let wxGetAccessTokenBaseUrl = prefix + 'token?'+qs.stringify(queryParams);
+  let wxGetAccessTokenBaseUrl = config.prefix + 'token?'+qs.stringify(queryParams);
   let options = {
     method: 'GET',
     url: wxGetAccessTokenBaseUrl
