@@ -41,11 +41,11 @@ utils.sign = function (config){
 utils.accessToken = function(config){
 let queryParams = {
     'grant_type': 'client_credential',
-    'appid': config.appId,
-    'secret': config.appSecret
+    'appid': config.wechat.appID,
+    'secret': config.wechat.appSecret
   };
 
-  let wxGetAccessTokenBaseUrl = config.prefix + 'token?'+qs.stringify(queryParams);
+  let wxGetAccessTokenBaseUrl = config.wechat.prefix + 'token?'+qs.stringify(queryParams);
   let options = {
     method: 'GET',
     url: wxGetAccessTokenBaseUrl
