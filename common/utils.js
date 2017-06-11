@@ -59,7 +59,7 @@ let queryParams = {
 };
 
 utils.saveToken = function (config) {
-  this.getaccessToken(config).then(res => {
+  this.accessToken(config).then(res => {
     let token = res['access_token'];
     fs.writeFile('./token', token, function (err) {
       
