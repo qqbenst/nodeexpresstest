@@ -6,7 +6,7 @@ utils.sign = function (config){
 	return function(req, res, next){
 		config = config || {};
 		var q = req.query;
-	  var token = getFileToken().token;
+	  var token = this.getFileToken().token;
 	  var signature = q.signature; //微信加密签名
 		var nonce = q.nonce; //随机数
 		var timestamp = q.timestamp; //时间戳
@@ -59,7 +59,7 @@ let queryParams = {
 };
 
 utils.saveToken = function (config) {
-  getAccessToken(config).then(res => {
+  this.getAccessToken(config).then(res => {
     let token = res['access_token'];
     fs.writeFile('./token', token, function (err) {
       
@@ -69,8 +69,9 @@ utils.saveToken = function (config) {
 
 utils.refreshToken = function (config) {
   this.saveToken(config);
+  var that = this;
   setInterval(function () {
-    saveToken(config);
+    that.saveToken(config);
   }, 7000*1000);
 };
 
