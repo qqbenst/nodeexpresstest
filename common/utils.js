@@ -70,13 +70,24 @@ utils.getTicket(req, res) = function (config){
 };
 
 utils.saveTicket = function (config,access_token,url){
-let wxGetTicketBaseUrl = config.wechat.prefix + ticket/getticket?+'access_token='+access_token+'&type=jsapi', function(_res){
-         // 这个异步回调里可以获取ticket
-         fs.writeFile('./ticket', _res, function (err) {
-      
-   		 });
-};
+let wxGetTicketBaseUrl = config.wechat.prefix + ticket/getticket?+'access_token='+access_token+'&type=jsapi'; 
+ let options = {
+    method: 'GET',
+    url: wxGetAccessTokenBaseUrl
+  }; 
 
+    return new Promise((resolve, reject) => {
+    request(options, function (err, res, body) {
+      if (res) {
+        resolve(body);
+      } else {
+        reject(err);
+        console.info(res);
+      }
+    });
+  })
+
+}；
 utils.accessToken = function(config){
 let queryParams = {
     'grant_type': 'client_credential',
@@ -107,7 +118,11 @@ utils.saveToken = function (config) {
   this.accessToken(config).then(res => {
     let token = res['access_token'];
     fs.writeFile('./token', token, function (err) {
-      that.saveTicket(config,token);
+      that.saveTicket(config,token).then(_res =>{
+      	         fs.writeFile('./ticket', _res, function (err) {
+
+                 });
+      });
     });
   })
 };
