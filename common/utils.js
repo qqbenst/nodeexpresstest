@@ -43,7 +43,7 @@ utils.getTicket = function (config){
      return function(req, res, next){
      let noncestr = Math.random().toString(36).substr(2, 15);
      let ts = parseInt(new Date().getTime() / 1000) + '';
-     let url = req.url;
+     let url = req.query.url;
      let str = 'jsapi_ticket=' + that.getFileTicket() + '&noncestr=' + noncestr + '&timestamp='+ ts +'&url=' + url;
      signature = sha1(str);
 
