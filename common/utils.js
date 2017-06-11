@@ -75,8 +75,8 @@ utils.saveTicket = function (config,access_token){
         reject(err);
         console.info(res);
       }
-    })
-  });
+    });
+  })
 
 };
 utils.accessToken = function(config){
