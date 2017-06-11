@@ -1,5 +1,8 @@
 var utils = {};
 var sha1 = require('sha1');
+var request = require('request');
+var qs = require('querystring');
+var fs = require('fs');
 
 //检查微信签名认证中间件
 utils.sign = function (config){
@@ -42,7 +45,7 @@ let queryParams = {
     'secret': config.appSecret
   };
 
-  let wxGetAccessTokenBaseUrl = config.prefix + 'token?'+queryParams.stringify(queryParams);
+  let wxGetAccessTokenBaseUrl = config.prefix + 'token?'+qs.stringify(queryParams);
   let options = {
     method: 'GET',
     url: wxGetAccessTokenBaseUrl
